@@ -5,6 +5,9 @@ export default class Main extends Component {
   static navigationOptions = {
     title: 'JSHunt',
   };
+  state = {
+    docs: [],
+  };
   componentDidMount() {
     this.loadProducts();
   }
@@ -12,12 +15,16 @@ export default class Main extends Component {
     const response = await api.get('/products');
 
     const {docs} = response.data;
+    this.setState({docs});
     console.log(docs);
   };
   render() {
     return (
       <View>
         <Text>Página Main</Text>
+        {this.state.docs.map(product => (
+          <Text key={product._id}>{product.title}</Text>
+        ))}
       </View>
     );
   }
